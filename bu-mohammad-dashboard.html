@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>عقار بو محمد — Operix</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=Tajawal:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #12303F;
+  --teal: #2C7A7B;
+  --teal-light: #E1F5EE;
+  --teal-dark: #0F6E56;
+  --bg: #F7F8FA;
+  --surface: #FFFFFF;
+  --border: rgba(0,0,0,0.08);
+  --text-primary: #12303F;
+  --text-secondary: #6B7280;
+  --text-muted: #9CA3AF;
+  --danger-bg: #FCEBEB;
+  --danger: #A32D2D;
+  --warn-bg: #FAEEDA;
+  --warn: #854F0B;
+  --ok-bg: #E1F5EE;
+  --ok: #0F6E56;
+  --info-bg: #E6F1FB;
+  --info: #0C447C;
+}
+
+body {
+  font-family: 'Tajawal', sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+  padding: 0;
+}
+
+.topbar {
+  background: var(--navy);
+  padding: 0 1.5rem;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo svg { width: 18px; height: 18px; }
+
+.brand-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: .06em;
+}
+
+.page-name {
+  font-size: 15px;
+  font-weight: 500;
+  color: white;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.live-badge {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: var(--teal-light);
+  color: var(--teal-dark);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--teal-dark);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap: 12px;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 600px) {
+  .stats-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .grid2 { grid-template-columns: 1fr !important; }
+  .contract-grid { grid-template-columns: 1fr !important; }
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.stat-label svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+.stat-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.stat-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.stat-danger .stat-val { color: var(--danger); }
+.stat-warn .stat-val { color: var(--warn); }
+.stat-ok .stat-val { color: var(--ok); }
+
+.progress-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.progress-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.progress-pct {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--teal);
+}
+
+.progress-bar {
+  height: 6px;
+  background: #F0F0F0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 6px;
+  background: var(--teal);
+  border-radius: 3px;
+  width: 71%;
+  transition: width 1s ease;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.card-head {
+  padding: .75rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card-title svg { width: 15px; height: 15px; color: var(--teal); }
+
+.count-pill {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  background: #F3F4F6;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  padding: .65rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  gap: 10px;
+}
+
+.row:last-of-type { border-bottom: none; }
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.av-teal { background: var(--teal-light); color: var(--teal-dark); }
+.av-navy { background: var(--info-bg); color: var(--info); }
+.av-amber { background: var(--warn-bg); color: var(--warn); }
+.av-red { background: var(--danger-bg); color: var(--danger); }
+
+.row-info { flex: 1; min-width: 0; }
+.row-name { font-size: 13px; font-weight: 500; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.row-meta { font-size: 11px; color: var(--text-secondary); margin-top: 1px; }
+
+.pill {
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.pill-late { background: var(--danger-bg); color: var(--danger); }
+.pill-warn { background: var(--warn-bg); color: var(--warn); }
+.pill-new { background: var(--info-bg); color: var(--info); }
+.pill-done { background: #EAF3DE; color: #3B6D11; }
+.pill-ok { background: var(--ok-bg); color: var(--ok); }
+
+.maint-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--info-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.maint-icon svg { width: 16px; height: 16px; color: var(--info); }
+
+.see-all {
+  display: flex;
+  justify-content: center;
+  padding: .6rem;
+  border-top: 1px solid var(--border);
+}
+
+.see-all a {
+  font-size: 12px;
+  color: var(--teal);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.full-card { margin-bottom: 1.5rem; }
+
+.contract-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+}
+
+.contract-cell {
+  padding: .75rem 1.25rem;
+  border-left: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.contract-cell:last-child { border-left: none; }
+.contract-cell:first-child { border-left: none; }
+
+.contract-info .name { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+.contract-info .date { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+
+.footer {
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 1.5rem 0 2rem;
+}
+
+.footer span { color: var(--teal); font-weight: 500; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-brand">
+    <div class="logo">
+      <svg viewBox="0 0 18 18" fill="none">
+        <circle cx="9" cy="9" r="7" stroke="white" stroke-width="1.5"/>
+        <path d="M9 3.5 Q14.5 9 9 14.5 Q3.5 9 9 3.5" stroke="#2C7A7B" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">OPERIX</div>
+      <div class="page-name">عقار بو محمد</div>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <div class="live-badge">
+      <div class="live-dot"></div>
+      مباشر
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-label">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg>
+        إجمالي الوحدات
+      </div>
+      <div class="stat-val">24</div>
+      <div class="stat-sub">حولي والسالمية</div>
+    </div>
+    <div class="stat-card stat-danger">
+      <div class="stat-label">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+        متأخرون
+      </div>
+      <div class="stat-val">7</div>
+      <div class="stat-sub">من أصل 24 مستأجر</div>
+    </div>
+    <div class="stat-card stat-warn">
+      <div class="stat-label">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        صيانة مفتوحة
+      </div>
+      <div class="stat-val">5</div>
+      <div class="stat-sub">بانتظار المتابعة</div>
+    </div>
+    <div class="stat-card stat-ok">
+      <div class="stat-label">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+        دفعوا هذا الشهر
+      </div>
+      <div class="stat-val">17</div>
+      <div class="stat-sub">من أصل 24</div>
+    </div>
+  </div>
+
+  <div class="progress-section">
+    <div class="progress-header">
+      <span class="progress-label">نسبة تحصيل الإيجارات — يونيو 2026</span>
+      <span class="progress-pct">71%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill"></div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-head">
+        <span class="card-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+          متأخرون عن الدفع
+        </span>
+        <span class="count-pill">7</span>
+      </div>
+      <div class="row">
+        <div class="avatar av-red">فع</div>
+        <div class="row-info">
+          <div class="row-name">فهد العتيبي</div>
+          <div class="row-meta">شقة 3 — حولي</div>
+        </div>
+        <span class="pill pill-late">متأخر</span>
+      </div>
+      <div class="row">
+        <div class="avatar av-amber">مع</div>
+        <div class="row-info">
+          <div class="row-name">محمد العجمي</div>
+          <div class="row-meta">شقة 7 — السالمية</div>
+        </div>
+        <span class="pill pill-late">متأخر</span>
+      </div>
+      <div class="row">
+        <div class="avatar av-red">نر</div>
+        <div class="row-info">
+          <div class="row-name">ناصر الرشيدي</div>
+          <div class="row-meta">شقة 11 — حولي</div>
+        </div>
+        <span class="pill pill-warn">تحذير</span>
+      </div>
+      <div class="see-all"><a href="#">عرض الكل (7) ←</a></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <span class="card-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          طلبات الصيانة
+        </span>
+        <span class="count-pill">5</span>
+      </div>
+      <div class="row">
+        <div class="maint-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 14 4 19M5 5l6 6M19 5l-6 6M15 15l4 4"/></svg>
+        </div>
+        <div class="row-info">
+          <div class="row-name">مكيف خربان</div>
+          <div class="row-meta">شقة 5 — منذ يومين</div>
+        </div>
+        <span class="pill pill-new">جديد</span>
+      </div>
+      <div class="row">
+        <div class="maint-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v6M12 22v-2M4.93 4.93l4.24 4.24M18.36 18.36l-1.41-1.41M2 12h6M22 12h-2M4.93 19.07l4.24-4.24M18.36 5.64l-1.41 1.41"/></svg>
+        </div>
+        <div class="row-info">
+          <div class="row-name">تسريب مياه</div>
+          <div class="row-meta">شقة 12 — منذ يوم</div>
+        </div>
+        <span class="pill pill-new">جديد</span>
+      </div>
+      <div class="row">
+        <div class="maint-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <div class="row-info">
+          <div class="row-name">كهرباء في المطبخ</div>
+          <div class="row-meta">شقة 8 — منذ 3 أيام</div>
+        </div>
+        <span class="pill pill-done">قيد التنفيذ</span>
+      </div>
+      <div class="see-all"><a href="#">عرض الكل (5) ←</a></div>
+    </div>
+  </div>
+
+  <div class="card full-card">
+    <div class="card-head">
+      <span class="card-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        عقود تنتهي قريباً
+      </span>
+      <span class="count-pill">3</span>
+    </div>
+    <div class="contract-grid">
+      <div class="contract-cell">
+        <div class="avatar av-amber">حح</div>
+        <div class="contract-info">
+          <div class="name">حسن حميدي</div>
+          <div class="date">انتهى 2024-01-01</div>
+        </div>
+        <span class="pill pill-late">منتهي</span>
+      </div>
+      <div class="contract-cell">
+        <div class="avatar av-navy">سا</div>
+        <div class="contract-info">
+          <div class="name">سالم الأنصاري</div>
+          <div class="date">ينتهي 2026-07-15</div>
+        </div>
+        <span class="pill pill-warn">قريب</span>
+      </div>
+      <div class="contract-cell">
+        <div class="avatar av-teal">مح</div>
+        <div class="contract-info">
+          <div class="name">مبارك الحربي</div>
+          <div class="date">ينتهي 2026-08-01</div>
+        </div>
+        <span class="pill pill-warn">قريب</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    مشغّل بواسطة <span>Operix</span> — نظام إدارة العقارات الذكي
+  </div>
+
+</div>
+</body>
+</html>
